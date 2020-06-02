@@ -1,7 +1,10 @@
 # spectral_baseline
 baseline subtraction algorithms including
+
   ALS-based (ALS, psalsa and derpsalsa),
+  
   two morphological algorithms and 
+  
   one wavelet-based.  
 
 Random baseline and morph/pspline algorithm require the csaps package, which can be installed by the following command:
