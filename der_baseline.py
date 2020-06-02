@@ -15,7 +15,7 @@ max_number_baseline_iterations = 16 # number of iterations in baseline search
 
 import numpy as np
 import skimage.morphology as skm
-from csaps import csaps
+# from csaps import csaps
 from itertools import groupby, count
 # from scipy import stats
 from scipy import sparse
@@ -24,6 +24,17 @@ from scipy.signal import detrend
 import matplotlib as mpl
 # from test_synth_BL import trig_bl
 from scipy.optimize import least_squares
+
+try:
+    from csaps import csaps
+except ImportError as e:
+    print('Random baseline and morph/pspline algorithm require csaps module. You may install it by running \n pip install -U csaps')
+    
+try:
+    import skued
+except ImportError as e:
+    print('Wavelet algorithm requires skued module. Depending on your installation you may install it by running \n pip install scikit-ued \n or \n conda config –add channels conda-forge conda install scikit-ued')
+
 
 mpl.rcParams['figure.dpi'] = 300 # default resolution of the plot
 import matplotlib.pyplot as plt
@@ -187,7 +198,7 @@ def derpsalsa_baseline(x, y, display=2, als_lambda=5e7, als_p_weight=1.5e-3):
         plt.plot(x, y - z, 'r',
                   x, y, 'k',
                   x, baseline, 'b');
-        plot_annotation = 'psalsa baseline';
+        plot_annotation = 'derpsalsa baseline';
         plt.text(0.5, 0.92, plot_annotation, horizontalalignment='center', verticalalignment='center', transform=plt.gca().transAxes);
         plt.show()
     return baseline
@@ -404,3 +415,18 @@ if __name__ == '__main__':
     plt.show()
     print('you may run the script again to test a different random smooth line')
     print('''otherwise, consider running the following line:\n_ = spectrum_baseline(exp_y+synthetic_bl, display=2, algorithm=random.choice(available_algorithms))''')
+    
+    exp_x = experimental_spectrum[:,0]
+    # exp_y = experimental_spectrum[:,1]
+    blp = spectrum_baseline(exp_y, display=0, algorithm='psalsa')
+    bla = spectrum_baseline(exp_y, display=0, algorithm='als')
+    bldp = spectrum_baseline(exp_y, display=0, algorithm='derpsalsa')
+    blkoch = spectrum_baseline(exp_y, display=0, algorithm='Koch')
+    blmorph_pspline = spectrum_baseline(exp_y, display=0, algorithm='morph_pspline')
+    blwavelet = spectrum_baseline(exp_y, display=0, algorithm='wavelet')
+    np.savetxt('bl_psalsa.txt', np.transpose([exp_x, blp]))
+    np.savetxt('bl_als.txt', np.transpose([exp_x, bla]))
+    np.savetxt('bl_derpsalsa.txt', np.transpose([exp_x, bldp]))
+    np.savetxt('bl_koch.txt', np.transpose([exp_x, blkoch]))
+    np.savetxt('bl_morph_pspline.txt', np.transpose([exp_x, blmorph_pspline]))
+    np.savetxt('bl_wavelet.txt', np.transpose([exp_x, blwavelet]))
