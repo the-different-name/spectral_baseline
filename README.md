@@ -1,11 +1,13 @@
 # spectral_baseline
-baseline subtraction algorithms including
+Baseline subtraction algorithms including
 
   ALS-based (ALS, psalsa and derpsalsa),
   
   two morphological algorithms and 
   
   one wavelet-based.  
+
+The description of derpsalsa is reported in JRS paper, doi: 10.1002/jrs.5952
 
 Random baseline and morph/pspline algorithm require the csaps package, which can be installed by the following command:
 
