@@ -90,9 +90,9 @@ def spectrum_baseline (y, x=[], display=0, algorithm='derpsalsa', wl_level=9):
 
 
 def baseline_als(x, y, display=2, als_lambda=5e6, als_p_weight=3e-6):
-    """ asymmetric baseline correction
+    """ asymmetric baseline correction, original algorithm
     Code by Rustam Guliev ~~ https://stackoverflow.com/questions/29156532/python-baseline-correction-library
-    parameters which can be manipulated:
+    Parameters that can be tuned:
     als_lambda  ~ 5e6
     als_p_weight ~ 3e-6
     (found from optimization with random smooth BL)
@@ -120,9 +120,9 @@ def baseline_als(x, y, display=2, als_lambda=5e6, als_p_weight=3e-6):
 
 
 def psalsa_baseline(x, y, display=2, als_lambda=6e7, als_p_weight=1.1e-3):
-    """ asymmetric baseline correction
+    """ asymmetric baseline correction with peak screening by amplitudes
     Algorithm by Sergio Oller-Moreno et al.
-    Parameters which can be manipulated:
+    Parameters that can be tuned:
     als_lambda  ~ 6e7
     als_p_weight ~ 1.1e-3
     (found from optimization with random 5-point BL)
@@ -152,9 +152,8 @@ def psalsa_baseline(x, y, display=2, als_lambda=6e7, als_p_weight=1.1e-3):
 
 
 def derpsalsa_baseline(x, y, display=2, als_lambda=5e7, als_p_weight=1.5e-3):
-    """ asymmetric baseline correction
-    Algorithm by Sergio Oller-Moreno et al.
-    Parameters which can be manipulated:
+    """ asymmetric baseline correction with peak screening by derivatives
+    Parameters that can be tuned:
     als_lambda  ~ 5e7
     als_p_weight ~ 1.5e-3
     (found from optimization with random 5-point BL)
