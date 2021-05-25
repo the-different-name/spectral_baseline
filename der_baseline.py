@@ -90,9 +90,9 @@ def spectrum_baseline (y, x=[], display=0, algorithm='derpsalsa', wl_level=9):
 
 
 def baseline_als(x, y, display=2, als_lambda=5e6, als_p_weight=3e-6):
-    """ asymmetric baseline correction, original algorithm
+    """ asymmetric baseline correction
     Code by Rustam Guliev ~~ https://stackoverflow.com/questions/29156532/python-baseline-correction-library
-    Parameters that can be tuned:
+    parameters which can be manipulated:
     als_lambda  ~ 5e6
     als_p_weight ~ 3e-6
     (found from optimization with random smooth BL)
@@ -120,9 +120,9 @@ def baseline_als(x, y, display=2, als_lambda=5e6, als_p_weight=3e-6):
 
 
 def psalsa_baseline(x, y, display=2, als_lambda=6e7, als_p_weight=1.1e-3):
-    """ asymmetric baseline correction with peak screening by amplitudes
+    """ asymmetric baseline correction
     Algorithm by Sergio Oller-Moreno et al.
-    Parameters that can be tuned:
+    Parameters which can be manipulated:
     als_lambda  ~ 6e7
     als_p_weight ~ 1.1e-3
     (found from optimization with random 5-point BL)
@@ -152,8 +152,9 @@ def psalsa_baseline(x, y, display=2, als_lambda=6e7, als_p_weight=1.1e-3):
 
 
 def derpsalsa_baseline(x, y, display=2, als_lambda=5e7, als_p_weight=1.5e-3):
-    """ asymmetric baseline correction with peak screening by derivatives
-    Parameters that can be tuned:
+    """ asymmetric baseline correction
+    Algorithm by Sergio Oller-Moreno et al.
+    Parameters which can be manipulated:
     als_lambda  ~ 5e7
     als_p_weight ~ 1.5e-3
     (found from optimization with random 5-point BL)
@@ -161,7 +162,7 @@ def derpsalsa_baseline(x, y, display=2, als_lambda=5e7, als_p_weight=1.5e-3):
 
     # 0: smooth the spectrum 16 times
     #    with the element of 1/100 of the spectral length:
-    zero_step_struct_el = np.int(2*np.round(len(y)/200) + 1)
+    zero_step_struct_el = int(2*np.round(len(y)/200) + 1)
     y_sm = molification_smoothing(y, zero_step_struct_el, 16)
     # compute the derivatives:
     y_sm_1d = np.gradient(y_sm)
@@ -325,7 +326,7 @@ def find_structure_element_with_roll(rawspectrum):
         find_structure_element(np.roll(rawspectrum, shift_width)))
     #@Test&Debug: # print('structure element by roll is ', structure_element)
     if structure_element > len(rawspectrum)/3 + 2:
-        structure_element = np.int(2*np.round(len(rawspectrum)/6) + 1)
+        structure_element = int(2*np.round(len(rawspectrum)/6) + 1)
         #@Test&Debug: # print('structure element should not exceed 1/3 of the spectrum length, limiting to ', structure_element)
     return structure_element
 
